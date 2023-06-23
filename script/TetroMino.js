@@ -1,7 +1,6 @@
 import { Utility } from './Utility.js';
 
 class TetroMino {
-class TetroMino {
   #MINO_SHAPE = {
     "棒形": [ [0, 0, 0, 0], [1, 1, 1, 1],[0, 0, 0, 0], [0, 0, 0, 0] ],
     "正方形": [ [0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0] ],
