@@ -11,11 +11,15 @@ class Score {
     }
   
     calculateScore() {
-        if (this.line === 1) {
+        if (this.line === 0){
+            this.value;
+        }
+        else if (this.line === 1) {
             this.value += this.BASE_SCORE; // 消えたライン数が1の時はベースの得点のみが加算される
-          } else {
+        } 
+        else {
             this.value += (this.BASE_SCORE * this.line) + (this.BASE_SCORE * Math.pow(this.BASE_BONUS, this.line - 1));
-          } // 一度に複数のラインを消すと、ラインの数に応じてボーナスも加算される
+        } // 一度に複数のラインを消すと、ラインの数に応じてボーナスも加算される
           return this.value;
     }
     displayScore() {
