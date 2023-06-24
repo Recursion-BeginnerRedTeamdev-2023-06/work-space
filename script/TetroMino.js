@@ -43,11 +43,11 @@ class TetroMino {
 
   /**
    * @param {tetro(Type=Array)} 回転させたいテトロミノ。
-   * @returns {Array} 回転させた形を2次元配列形式で返す。
+   * @returns {Array} 回転させた形を連想配列(HashMap)形式で返す。
    */
   static rotate(tetro){
     const SHAPE_INFO = tetro["shape"];
-    let rotateTetro = [];
+    let rotateTetroShape = [];
 
     for(let y = 0; y < this.MINO_SIZE; y++) {
       rotateTetro[y] = [];
@@ -57,7 +57,7 @@ class TetroMino {
     }
 
     return { 
-      "shape": rotateTetro,
+      "shape": rotateTetroShape,
       "color": tetro["color"]
     };
   }
