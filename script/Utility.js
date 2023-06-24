@@ -6,12 +6,10 @@ class Utility {
      * @param {BLOCK_SIZE} TetroMinoクラスで指定されたブロックサイズ
      */
     static createMino(tetroMino, MINO_SIZE, BLOCK_SIZE) {
-      const COLOR = ["red", "blue", "green", "orange"]
       const NON_BLOCKS = 0;
       
       let canvas = document.getElementById("canvas");
       let context = canvas.getContext("2d");
-      let randomNum = Math.floor(Math.random() * COLOR.length);
   
       for (let y = 0; y < MINO_SIZE; y++) {
         for (let x = 0; x < MINO_SIZE; x++) {
@@ -19,7 +17,7 @@ class Utility {
             let position_x = x * BLOCK_SIZE;
             let position_y = y * BLOCK_SIZE;
       
-            context.fillStyle = COLOR[randomNum];
+            context.fillStyle = tetroMino[4];
             context.fillRect(position_x, position_y, BLOCK_SIZE, BLOCK_SIZE);
       
             context.strokeStyle = "black";
