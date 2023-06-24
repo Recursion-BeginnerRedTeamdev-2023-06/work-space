@@ -40,6 +40,8 @@ class TetroMino {
         rotateTetro[y][x] = tetro[this.MINO_SIZE-x-1][y];
       }
     }
+
+    rotateTetro.push(tetro[4]) // 色情報を追加する。rotateされた2次元配列は色情報がないため。
     return rotateTetro;
   }
 }
