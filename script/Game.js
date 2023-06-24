@@ -1,6 +1,7 @@
-import { Utility } from './Utility.js';
-import { TetroMino } from './TetroMino.js';
+import { PlayArea } from './PlayArea.js';
 import { Score } from './Score.js';
+import { TetroMino } from './TetroMino.js';
+import { Utility } from './Utility.js';
 
 let mino = TetroMino.getRandomMinoType();
 
