@@ -2,48 +2,37 @@ import { TetroMino } from "./TetroMino.js";
 
 
 class PlayArea {
-    #canvas = document.getElementById("canvas");
-    #context = canvas.getContext("2d");
-
     constructor(height, width, tetroMino){
         this.height = height;
         this.width = width;
         this.tetroMino = tetroMino;
-    }
-
-    getHeight() {
-        return this.height;
-    }
-
-    getWidth() {
-        return this.width;
+        this.canvas = document.getElementById("canvas");
+        this.context = this.canvas.getContext("2d");
     }
 
     display(){}
-
+    
     drawField(){
-        const FIELD_COL = this.getWidth();
-        const FIELD_ROW = this.getHeight();
-        const SCREEN_W = TetroMino.BLOCK_SIZE*FIELD_COL;
-        const SCREEN_H = TetroMino.BLOCK_SIZE*FIELD_ROW;
-        const START_X = FIELD_COL/2 - TetroMino.MINO_SIZE/2;
+        const SCREEN_W = TetroMino.BLOCK_SIZE*this.width;
+        const SCREEN_H = TetroMino.BLOCK_SIZE*this.height;
+        const START_X = this.width/2 - TetroMino.MINO_SIZE/2;
         const START_Y = 0;
 
         let tetro_x = START_X;
         let tetro_y = START_Y;
 
-        this.#canvas.height = SCREEN_H;
-        this.#canvas.width = SCREEN_W;
-        this.#canvas.style.border = "4px solid #555";
+        this.canvas.height = SCREEN_H;
+        this.canvas.width = SCREEN_W;
+        this.canvas.style.border = "4px solid #555";
 
         let field = [];
         this.FieldInit(field);
 
-        this.#context.clearRect(0, 0, SCREEN_W, SCREEN_H);
+        this.context.clearRect(0, 0, SCREEN_W, SCREEN_H);
 
         let tetroMino = TetroMino.getRandomMinoType();
-        for(let y=0;y<FIELD_ROW;y++){
-            for(let x=0;x<FIELD_COL;x++){
+        for(let y=0;y<this.height;y++){
+            for(let x=0;x<this.width;x++){
               if(field[y][x]){
                 this.drawBlock(x, y, tetroMino["color"]);            
               }
@@ -72,11 +61,11 @@ class PlayArea {
         let position_x = x * TetroMino.BLOCK_SIZE;
         let position_y = y * TetroMino.BLOCK_SIZE;
 
-        this.#context.fillStyle = color;
-        this.#context.fillRect(position_x, position_y, TetroMino.BLOCK_SIZE, TetroMino.BLOCK_SIZE);
+        this.context.fillStyle = color;
+        this.context.fillRect(position_x, position_y, TetroMino.BLOCK_SIZE, TetroMino.BLOCK_SIZE);
 
-        this.#context.strokeStyle = "black";
-        this.#context.strokeRect(position_x, position_y, TetroMino.BLOCK_SIZE, TetroMino.BLOCK_SIZE);
+        this.context.strokeStyle = "black";
+        this.context.strokeRect(position_x, position_y, TetroMino.BLOCK_SIZE, TetroMino.BLOCK_SIZE);
     }
 
     fixMino(){}
