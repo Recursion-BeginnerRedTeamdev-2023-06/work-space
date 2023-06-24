@@ -1,21 +1,35 @@
 class TetroMino {
   static BLOCK_SIZE = 30;
   static MINO_INFO = {
-    "棒形": [ [0, 0, 0, 0], [1, 1, 1, 1],[0, 0, 0, 0], [0, 0, 0, 0], "red" ],
-    "正方形": [ [0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0], "blue" ],
-    "S字": [ [0, 0, 0, 0] , [0, 1, 1, 0] , [1, 1, 0, 0] , [0, 0, 0, 0], "green" ],
-    "Z字": [ [0, 0, 0, 0], [1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 0], "orange" ],
-    "J字": [ [0, 0, 1, 0] , [0, 0, 1, 0] , [0, 1, 1, 0] , [0, 0, 0, 0], "brown" ],
-    "L字": [ [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 0], "pink" ],
-    "T字": [ [0, 1, 0, 0], [0, 1, 1, 0], [0, 1, 0, 0], [0, 0, 0, 0], "silver" ]
-  };
+      "棒形": {
+        "shape":[ [0, 0, 0, 0], [1, 1, 1, 1],[0, 0, 0, 0], [0, 0, 0, 0] ],
+        "color": "red"},
+      "正方形": {
+        "shape":[ [0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0] ],
+        "color": "blue"},
+      "S字": {
+        "shape": [ [0, 0, 0, 0] , [0, 1, 1, 0] , [1, 1, 0, 0] , [0, 0, 0, 0] ],
+        "color": "green"},
+      "Z字": {
+        "shape":[ [0, 0, 0, 0], [1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 0] ],
+        "color": "orange"},
+      "J字": {
+        "shape": [ [0, 0, 1, 0] , [0, 0, 1, 0] , [0, 1, 1, 0] , [0, 0, 0, 0] ],
+        "color": "brown"},
+      "L字": { 
+        "shape": [ [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 0] ], 
+        "color": "pink"},
+      "T字": {
+        "shape": [ [0, 1, 0, 0], [0, 1, 1, 0], [0, 1, 0, 0], [0, 0, 0, 0] ],
+        "color": "silver"} 
+    };
   static MINO_SIZE = 4;
 
   /**
    * @param {shapeType(Type=String)} pattern 棒形/正方形/S字/Z字/J字/L字/T字
    * @returns {Array} 指定された形を2次元配列形式で返す。
    */
-  static getShape(shapeType) {
+  static getShapeInfo(shapeType) {
     return this.MINO_INFO[shapeType];
   }
 
@@ -24,25 +38,28 @@ class TetroMino {
     const SHAPE_PATTERN = ["棒形", "正方形", "S字", "Z字", "J字", "L字", "T字"];
     let randomShapeType = Math.floor(Math.random() * SHAPE_PATTERN.length);
 
-    return this.getShape(SHAPE_PATTERN[randomShapeType]);
+    return this.MINO_INFO[SHAPE_PATTERN[randomShapeType]];
   }
 
   /**
-   * @param {tetro} 回転させたいテトロミノ。
+   * @param {tetro(Type=Array)} 回転させたいテトロミノ。
    * @returns {Array} 回転させた形を2次元配列形式で返す。
    */
   static rotate(tetro){
+    const SHAPE_INFO = tetro["shape"];
     let rotateTetro = [];
 
     for(let y = 0; y < this.MINO_SIZE; y++) {
       rotateTetro[y] = [];
       for(let x = 0; x < this.MINO_SIZE; x++){
-        rotateTetro[y][x] = tetro[this.MINO_SIZE-x-1][y];
+        rotateTetro[y][x] = SHAPE_INFO[this.MINO_SIZE-x-1][y];
       }
     }
 
-    rotateTetro.push(tetro[4]) // 色情報を追加する。rotateされた2次元配列は色情報がないため。
-    return rotateTetro;
+    return { 
+      "shape": rotateTetro,
+      "color": tetro["color"]
+    };
   }
 }
 
