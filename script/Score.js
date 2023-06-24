@@ -1,8 +1,9 @@
 class Score {
-    constructor(line) {
+    constructor() {
       const BASE_SCORE = 100;       // 1ライン消されると加算されるスコア
       const BASE_BONUS = 2;        // ボーナスの乗数
       let value = 0;          // 初期値のスコア
+      let line = 0;
       this.line = line;
       this.BASE_SCORE = BASE_SCORE;
       this.BASE_BONUS = BASE_BONUS;
@@ -28,3 +29,5 @@ class Score {
       context.fillText(scoreValue, 410, 340);
     }
   }
+
+  export { Score };
