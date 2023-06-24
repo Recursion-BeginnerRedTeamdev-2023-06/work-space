@@ -50,9 +50,9 @@ class TetroMino {
     let rotateTetroShape = [];
 
     for(let y = 0; y < this.MINO_SIZE; y++) {
-      rotateTetro[y] = [];
+      rotateTetroShape[y] = [];
       for(let x = 0; x < this.MINO_SIZE; x++){
-        rotateTetro[y][x] = SHAPE_INFO[this.MINO_SIZE-x-1][y];
+        rotateTetroShape[y][x] = SHAPE_INFO[this.MINO_SIZE-x-1][y];
       }
     }
 
