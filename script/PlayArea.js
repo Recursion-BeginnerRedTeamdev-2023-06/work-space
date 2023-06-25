@@ -14,7 +14,10 @@ class PlayArea {
     this.canvas.height = TetroMino.BLOCK_SIZE*this.height;
     this.canvas.width = TetroMino.BLOCK_SIZE*this.width;
     this.canvas.style.border = "4px solid #555";
+    
+    this.gameSpeed = 1000;
     this.FieldInit();
+    this.dropMinoLoop();
   }
 
   display(){}
@@ -107,7 +110,13 @@ class PlayArea {
       }
     }
   }
-
+  
+  dropMinoLoop() {
+    this.dropMino();
+    setTimeout(() => {
+      this.dropMinoLoop();
+    }, this.gameSpeed);
+  }
 }
 
 export { PlayArea }

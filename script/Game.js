@@ -19,34 +19,34 @@ let mino = TetroMino.getRandomMinoType();
 // score.displayScore();
 
 // PlayAreaクラスのフィールド描画
-let palyArea = new PlayArea(20, 10, mino);
-palyArea.drawField()
+let playArea = new PlayArea(20, 10, mino);
+playArea.drawField()
 
 document.addEventListener('keydown', function(e) {
     switch (e.keyCode) {
       case 37: // 左矢印キー
-        if (palyArea.isContact(-1, 0)) {
-          palyArea.tetro_x--;
+        if (playArea.isContact(-1, 0)) {
+          playArea.tetro_x--;
         }
         break;
       case 38: // 上矢印キー
-        if (palyArea.isContact(0, -1)) {
-          palyArea.tetro_y--;
+        if (playArea.isContact(0, -1)) {
+          playArea.tetro_y--;
         }
         break;
       case 39: // 右矢印キー
-        if (palyArea.isContact(1, 0)) {
-          palyArea.tetro_x++;
+        if (playArea.isContact(1, 0)) {
+          playArea.tetro_x++;
         }
         break;
       case 40: // 下矢印キー
-        if (palyArea.isContact(0, 1)) {
-          palyArea.tetro_y++;
+        if (playArea.isContact(0, 1)) {
+          playArea.tetro_y++;
         }
         break;
       case 32: // スペースキー
         break;
     }
   
-    palyArea.drawField();
+    playArea.drawField();
   });
