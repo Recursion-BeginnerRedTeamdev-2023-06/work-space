@@ -20,7 +20,7 @@ class PlayArea {
       
   drawField(){
     this.FieldInit();
-    this.context.clearRect(0, 0, this.canvas.height, this.canvas.width);
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     for(let y=0;y<this.height;y++){
       for(let x=0;x<this.width;x++){
