@@ -84,7 +84,10 @@ class PlayArea {
 
   move(){}
 
-  dropMino(){}
+  dropMino() {
+    if (this.isContact(0, 1)) this.tetro_y++;
+    this.drawField();
+  }
 
   deleteMino(){
     for(let y = 0;y < this.height ;y ++){
