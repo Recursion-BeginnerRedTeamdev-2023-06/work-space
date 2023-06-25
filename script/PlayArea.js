@@ -67,7 +67,24 @@ class PlayArea {
 
   dropMino(){}
 
-  deleteMino(){}
+  deleteMino(){
+    for(let y = 0;y < this.height ;y ++){
+      let flag = true;
+      for(let x = 0;x < this.width ;x ++){
+        if(!this.field[y][x]) {
+          flag = false;
+          break;
+        }
+      }
+      if(flag == true){
+        for(let ny = y; ny > 0;ny --){
+          for(let nx = 0;nx < this.height ;nx ++){
+            this.field[ny][nx] = this.field[ny - 1][nx];
+          }
+        }
+      }
+    }
+  }
 
 }
 
