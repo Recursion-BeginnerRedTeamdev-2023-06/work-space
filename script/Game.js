@@ -20,29 +20,33 @@ let mino = TetroMino.getRandomMinoType();
 
 // PlayAreaクラスのフィールド描画
 let palyArea = new PlayArea(20, 10, mino);
-palyArea.drawField();
+palyArea.drawField()
 
-document.addEventListener('keydown',function(e){
-switch(e.keyCode){
-        case 37:
-        // if(checkMove(-1,0,palyArea,tetro["shape"])) palyArea.tetro_x--;
-        palyArea.tetro_x--;
+document.addEventListener('keydown', function(e) {
+    switch (e.keyCode) {
+      case 37: // 左矢印キー
+        if (palyArea.isContact(-1, 0)) {
+          palyArea.tetro_x--;
+        }
         break;
-        case 38:
-        // if(checkMove(0,-1,palyArea,tetro["shape"])) palyArea.tetro_y--;
-        palyArea.tetro_y--;
+      case 38: // 上矢印キー
+        if (palyArea.isContact(0, -1)) {
+          palyArea.tetro_y--;
+        }
         break;
-        case 39:
-        // if(checkMove(1,0,palyArea,tetro["shape"])) palyArea.tetro_x++;
-        palyArea.tetro_x++;
+      case 39: // 右矢印キー
+        if (palyArea.isContact(1, 0)) {
+          palyArea.tetro_x++;
+        }
         break;
-        case 40:
-        // if(checkMove(0,1,palyArea,tetro["shape"])) palyArea.tetro_y++;
-        palyArea.tetro_y++;
+      case 40: // 下矢印キー
+        if (palyArea.isContact(0, 1)) {
+          palyArea.tetro_y++;
+        }
         break;
-        case 32:
-        break;   
+      case 32: // スペースキー
+        break;
     }
-palyArea.drawField();
-// palyArea.context.clearRect(0, 0, palyArea.canvas.height, palyArea.canvas.width);
-});
+  
+    palyArea.drawField();
+  });

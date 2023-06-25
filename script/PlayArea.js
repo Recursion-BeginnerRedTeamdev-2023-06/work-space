@@ -61,7 +61,26 @@ class PlayArea {
 
   fixMino(){}
 
-  isContact(){}
+  isContact(next_x, next_y) {
+    for (let y = 0; y < TetroMino.MINO_SIZE; y++) {
+      for (let x = 0; x < TetroMino.MINO_SIZE; x++) {
+        let new_position_x = this.tetro_x + next_x + x;
+        let new_position_y = this.tetro_y + next_y + y;
+        if (this.tetroMino["shape"][y][x]) {
+          if (
+            new_position_y < 0 || // 上壁に当たった場合
+            new_position_y >= this.height || // 下壁に当たった場合
+            this.field[new_position_y][new_position_x] ||
+            new_position_x < 0 ||
+            new_position_x >= this.width
+          ) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
 
   move(){}
 
