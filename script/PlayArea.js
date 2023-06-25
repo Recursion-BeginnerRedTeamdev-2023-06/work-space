@@ -100,31 +100,43 @@ class PlayArea {
     if (this.isContact(0, 1)) this.tetro_y++;
     else {
       const INIT_TETRO_X = this.width/2 - TetroMino.MINO_SIZE/2;
-      const INIT_TETRO_y = 0;
-
+      const INIT_TETRO_Y = 0;
+  
       this.fixMino();
       this.tetroMino = TetroMino.getRandomMinoType();
-      this.tetro_x = INIT_TETRO_X
-      this.tetro_y = INIT_TETRO_y;
+      this.tetro_x = INIT_TETRO_X;
+      this.tetro_y = INIT_TETRO_Y;
+  
+      this.deleteMino(); // テトリスの行を消去する
+  
     }
     this.drawField();
   }
 
-  deleteMino(){
-    for(let y = 0;y < this.height ;y ++){
+  deleteMino() {
+    let linesDeleted = 0; // 削除されたラインの数をカウントする変数
+
+    for (let y = this.height - 1; y >= 0; y--) {
       let flag = true;
-      for(let x = 0;x < this.width ;x ++){
-        if(!this.field[y][x]) {
+      for (let x = 0; x < this.width; x++) {
+        if (!this.field[y][x]) {
           flag = false;
           break;
         }
       }
-      if(flag == true){
-        for(let ny = y; ny > 0;ny --){
-          for(let nx = 0;nx < this.height ;nx ++){
+      if (flag) {
+        for (let ny = y; ny > 0; ny--) {
+          for (let nx = 0; nx < this.width; nx++) {
             this.field[ny][nx] = this.field[ny - 1][nx];
           }
         }
+        for (let nx = 0; nx < this.width; nx++) {
+          this.field[0][nx] = 0;
+        }
+        // もう一度同じ行をチェックするためにインデックスを増やす
+        y++;
+
+        linesDeleted++; // ラインが削除されたのでカウントを増やす
       }
     }
   }
