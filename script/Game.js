@@ -19,5 +19,5 @@ let mino = TetroMino.getRandomMinoType();
 // score.displayScore();
 
 // PlayAreaクラスのフィールド描画
-let palyArea = new PlayArea(10, 20);
+let palyArea = new PlayArea(20, 10, mino);
 palyArea.drawField();
