@@ -45,7 +45,10 @@ document.addEventListener('keydown', function(e) {
         }
         break;
       case 32: // スペースキー
-        playArea.rotateMino();
+        let tetro = TetroMino.rotate(playArea.tetroMino);
+        if (playArea.isContact(0, 0, tetro)) {
+          playArea.rotateMino();
+        }
         break;
     }
   

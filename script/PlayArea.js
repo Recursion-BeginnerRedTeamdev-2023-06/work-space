@@ -72,12 +72,13 @@ class PlayArea {
     }
   }
 
-  isContact(next_x, next_y) {
+  isContact(next_x, next_y, ntetro) {
+    if(ntetro == undefined) ntetro = this.tetroMino;
     for (let y = 0; y < TetroMino.MINO_SIZE; y++) {
       for (let x = 0; x < TetroMino.MINO_SIZE; x++) {
         let new_position_x = this.tetro_x + next_x + x;
         let new_position_y = this.tetro_y + next_y + y;
-        if (this.tetroMino["shape"][y][x]) {
+        if (ntetro["shape"][y][x]) {
           if (
             new_position_y < 0 || // 上壁に当たった場合
             new_position_y >= this.height || // 下壁に当たった場合
