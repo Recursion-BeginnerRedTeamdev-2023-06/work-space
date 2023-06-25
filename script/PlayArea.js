@@ -7,7 +7,7 @@ class PlayArea {
     this.width = width;
     this.tetroMino = tetroMino;
     this.field = [];
-    this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;;
+    this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;
     this.tetro_y = 0;
     this.tetro_t = 1; // TODO: TetroMinoのrandomShapeType+1(1~7)が必要。どのように取得するか考える
     this.canvas = document.getElementById("canvas");
@@ -99,10 +99,13 @@ class PlayArea {
   dropMino() {
     if (this.isContact(0, 1)) this.tetro_y++;
     else {
+      const INIT_TETRO_X = this.width/2 - TetroMino.MINO_SIZE/2;
+      const INIT_TETRO_y = 0;
+
       this.fixMino();
       this.tetroMino = TetroMino.getRandomMinoType();
-      this.tetro_x = 0;
-      this.tetro_y = 0;
+      this.tetro_x = INIT_TETRO_X
+      this.tetro_y = INIT_TETRO_y;
     }
     this.drawField();
   }
