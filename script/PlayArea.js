@@ -67,7 +67,7 @@ class PlayArea {
     for(let y=0;y< TetroMino.MINO_SIZE;y++){
       for(let x=0;x< TetroMino.MINO_SIZE;x++){
         if(this.tetroMino["shape"][y][x]){
-          this.field[this.tetro_y + y][this.tetro_x + x] = this.tetro_t;         
+          this.field[this.tetro_y + y][this.tetro_x + x] = this.tetro_t;  
         }
       }
     }
@@ -98,6 +98,12 @@ class PlayArea {
 
   dropMino() {
     if (this.isContact(0, 1)) this.tetro_y++;
+    else {
+      this.fixMino();
+      this.tetroMino = TetroMino.getRandomMinoType();
+      this.tetro_x = 0;
+      this.tetro_y = 0;
+    }
     this.drawField();
   }
 
