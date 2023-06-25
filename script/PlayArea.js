@@ -135,6 +135,10 @@ class PlayArea {
       this.dropMinoLoop();
     }, this.gameSpeed);
   }
+
+  rotateMino(){
+    this.tetroMino = TetroMino.rotate(this.tetroMino);
+  }
 }
 
 export { PlayArea }

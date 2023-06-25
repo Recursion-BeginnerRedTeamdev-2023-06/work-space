@@ -45,6 +45,7 @@ document.addEventListener('keydown', function(e) {
         }
         break;
       case 32: // スペースキー
+        playArea.rotateMino();
         break;
     }
   
