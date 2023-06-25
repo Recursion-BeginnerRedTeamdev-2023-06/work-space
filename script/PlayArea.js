@@ -14,12 +14,12 @@ class PlayArea {
     this.canvas.height = TetroMino.BLOCK_SIZE*this.height;
     this.canvas.width = TetroMino.BLOCK_SIZE*this.width;
     this.canvas.style.border = "4px solid #555";
+    this.FieldInit();
   }
 
   display(){}
       
   drawField(){
-    this.FieldInit();
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     for(let y=0;y<this.height;y++){
