@@ -19,8 +19,6 @@ class PlayArea {
     this.FieldInit();
     this.dropMinoLoop();
   }
-
-  display(){}
       
   drawField(){
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -93,8 +91,6 @@ class PlayArea {
     }
     return true;
   }
-
-  move(){}
 
   dropMino() {
     if (this.isContact(0, 1)) this.tetro_y++;
