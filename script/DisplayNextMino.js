@@ -1,0 +1,5 @@
+class DisplayNextMino {
+
+}
+
+export { DisplayNextMino }
