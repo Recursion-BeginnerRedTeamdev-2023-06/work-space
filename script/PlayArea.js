@@ -9,7 +9,7 @@ class PlayArea {
     this.field = [];
     this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;
     this.tetro_y = 0;
-    this.canvas = document.getElementById("canvas");
+    this.canvas = document.getElementById("play-canvas");
     this.context = this.canvas.getContext("2d");
     this.canvas.height = TetroMino.BLOCK_SIZE*this.height;
     this.canvas.width = TetroMino.BLOCK_SIZE*this.width;
