@@ -1,4 +1,5 @@
 import { TetroMino } from "./TetroMino.js";
+import { Score } from "./Score.js"
 
 
 class PlayArea {
@@ -19,6 +20,8 @@ class PlayArea {
     this.isGameOver = false;
     this.FieldInit();
     this.dropMinoLoop();
+    this.score = new Score();
+    this.score.displayScore(); // 初期値のスコアを表示
   }
       
   drawField(){
@@ -149,6 +152,8 @@ class PlayArea {
         linesDeleted++; // ラインが削除されたのでカウントを増やす
       }
     }
+        this.score.line = linesDeleted
+        this.score.displayScore();
   }
   
   dropMinoLoop() {
@@ -163,4 +168,4 @@ class PlayArea {
   }
 }
 
-export { PlayArea }
+export { PlayArea };
