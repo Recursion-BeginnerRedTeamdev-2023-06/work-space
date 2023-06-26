@@ -16,6 +16,7 @@ class PlayArea {
     this.canvas.style.border = "4px solid #555";
     
     this.gameSpeed = 1000;
+    this.isGameOver = false;
     this.FieldInit();
     this.dropMinoLoop();
   }
@@ -37,6 +38,18 @@ class PlayArea {
           this.drawBlock(this.tetro_x+x, this.tetro_y+y, this.tetroMino["color"]);
         }
       }
+    }
+
+    if(this.isGameOver){
+      let s = "GAME OVER";
+      this.context.font = "40px 'MSゴシック'";
+      let w = this.context.measureText(s).width;
+      let x = this.canvas.width/2 - w/2;
+      let y = this.canvas.height/2 - 20;
+      this.context.lineWidth = 4;
+      this.context.strokeText(s,x,y);
+      this.context.fillStyle = "white";
+      this.context.fillText(s,x,y);
     }
   }
 
@@ -93,6 +106,7 @@ class PlayArea {
   }
 
   dropMino() {
+    if(this.isGameOver) return;
     if (this.isContact(0, 1)) this.tetro_y++;
     else {
       const INIT_TETRO_X = this.width/2 - TetroMino.MINO_SIZE/2;
@@ -104,7 +118,7 @@ class PlayArea {
       this.tetro_y = INIT_TETRO_Y;
   
       this.deleteMino(); // テトリスの行を消去する
-  
+      if (!this.isContact(0, 0)) this.isGameOver = true;
     }
     this.drawField();
   }

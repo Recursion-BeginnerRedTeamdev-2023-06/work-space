@@ -22,6 +22,7 @@ let playArea = new PlayArea(20, 10, mino);
 playArea.drawField()
 
 document.addEventListener('keydown', function(e) {
+  if(playArea.isGameOver) return;
     switch (e.keyCode) {
       case 37: // 左矢印キー
         if (playArea.isContact(-1, 0)) {
