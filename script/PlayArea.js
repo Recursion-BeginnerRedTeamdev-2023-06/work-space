@@ -26,6 +26,15 @@ class PlayArea {
     this.score = new Score();
     this.score.displayScore(); // 初期値のスコアを表示
   }
+
+  changeDifficulty() {
+    if (this.score.value > 0 && this.score.value % 1000 === 0) {
+      this.gameSpeed *= 0.5;
+      if (this.gameSpeed < 0) {
+        this.gameSpeed = 0;
+      }
+    }
+  }
       
   drawField(){
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -157,6 +166,7 @@ class PlayArea {
     }
         this.score.line = linesDeleted
         this.score.displayScore();
+        this.changeDifficulty();
   }
   
   dropMinoLoop() {
