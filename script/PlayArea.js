@@ -6,7 +6,8 @@ class PlayArea {
   constructor(height, width, tetroMino){
     this.height = height;
     this.width = width;
-    this.tetroMino = tetroMino;
+    this.currentMino = tetroMino;
+    this.nextMino = TetroMino.getRandomMinoType();
     this.field = [];
     this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;
     this.tetro_y = 0;
@@ -19,6 +20,8 @@ class PlayArea {
     this.gameSpeed = 1000;
     this.FieldInit();
     this.dropMinoLoop();
+
+    DisplayNextMino.displayMino(this.nextMino);
   }
       
   drawField(){
@@ -34,8 +37,8 @@ class PlayArea {
 
     for(let y=0;y<TetroMino.MINO_SIZE;y++){
       for(let x=0;x<TetroMino.MINO_SIZE;x++){
-        if(this.tetroMino["shape"][y][x]){
-          this.drawBlock(this.tetro_x+x, this.tetro_y+y, this.tetroMino["color"]);
+        if(this.currentMino["shape"][y][x]){
+          this.drawBlock(this.tetro_x+x, this.tetro_y+y, this.currentMino["color"]);
         }
       }
     }
@@ -64,15 +67,15 @@ class PlayArea {
   fixMino(){
     for(let y=0;y< TetroMino.MINO_SIZE;y++){
       for(let x=0;x< TetroMino.MINO_SIZE;x++){
-        if(this.tetroMino["shape"][y][x]){
-          this.field[this.tetro_y + y][this.tetro_x + x] = this.tetroMino["color"];  
+        if(this.currentMino["shape"][y][x]){
+          this.field[this.tetro_y + y][this.tetro_x + x] = this.currentMino["color"];  
         }
       }
     }
   }
 
   isContact(next_x, next_y, ntetro) {
-    if(ntetro == undefined) ntetro = this.tetroMino;
+    if(ntetro == undefined) ntetro = this.currentMino;
     for (let y = 0; y < TetroMino.MINO_SIZE; y++) {
       for (let x = 0; x < TetroMino.MINO_SIZE; x++) {
         let new_position_x = this.tetro_x + next_x + x;
@@ -93,21 +96,25 @@ class PlayArea {
     return true;
   }
 
-  dropMino() {
-    if (this.isContact(0, 1)) this.tetro_y++;
+  dropMino() { 
+    if (this.isContact(0, 1)) {
+      this.tetro_y++;
+    }
     else {
       const INIT_TETRO_X = this.width/2 - TetroMino.MINO_SIZE/2;
       const INIT_TETRO_Y = 0;
-  
+      
       this.fixMino();
-      this.tetroMino = TetroMino.getRandomMinoType();
+      this.currentMino = this.next_mino;      
       this.tetro_x = INIT_TETRO_X;
       this.tetro_y = INIT_TETRO_Y;
   
       this.deleteMino(); // テトリスの行を消去する
-  
+      this.currentMino = this.nextMino;
+      this.nextMino = TetroMino.getRandomMinoType();
     }
     this.drawField();
+    DisplayNextMino.displayMino(this.nextMino);
   }
 
   deleteMino() {
@@ -146,7 +153,7 @@ class PlayArea {
   }
 
   rotateMino(){
-    this.tetroMino = TetroMino.rotate(this.tetroMino);
+    this.currentMino = TetroMino.rotate(this.currentMino);
   }
 }
 
