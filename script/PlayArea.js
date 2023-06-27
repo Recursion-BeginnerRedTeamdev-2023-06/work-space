@@ -97,9 +97,8 @@ class PlayArea {
   }
 
   dropMino() { 
-    if (this.isContact(0, 1)) {
-      this.tetro_y++;
-    }
+
+    if (this.isContact(0, 1)) this.tetro_y++;
     else {
       const INIT_TETRO_X = this.width/2 - TetroMino.MINO_SIZE/2;
       const INIT_TETRO_Y = 0;
@@ -113,8 +112,10 @@ class PlayArea {
       this.currentMino = this.nextMino;
       this.nextMino = TetroMino.getRandomMinoType();
     }
+
     this.drawField();
     DisplayNextMino.displayMino(this.nextMino);
+  
   }
 
   deleteMino() {
