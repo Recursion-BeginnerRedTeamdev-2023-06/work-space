@@ -3,22 +3,25 @@ import { Score } from "./Score.js"
 
 
 class PlayArea {
-  constructor(height, width, tetroMino){
+  constructor(height, width){
     this.height = height;
     this.width = width;
-    this.tetroMino = tetroMino;
     this.field = [];
-    this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;
-    this.tetro_y = 0;
     this.canvas = document.getElementById("play-canvas");
     this.context = this.canvas.getContext("2d");
     this.canvas.height = TetroMino.BLOCK_SIZE*this.height;
     this.canvas.width = TetroMino.BLOCK_SIZE*this.width;
     this.canvas.style.border = "4px solid #555";
-    
+  }
+
+  start(){
     this.gameSpeed = 1000;
     this.isGameOver = false;
+    this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;
+    this.tetro_y = 0;
+
     this.FieldInit();
+    this.tetroMino = TetroMino.getRandomMinoType();
     this.dropMinoLoop();
     this.score = new Score();
     this.score.displayScore(); // 初期値のスコアを表示
