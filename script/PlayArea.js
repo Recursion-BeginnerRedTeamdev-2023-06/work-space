@@ -26,6 +26,15 @@ class PlayArea {
     this.score = new Score();
     this.score.displayScore(); // 初期値のスコアを表示
   }
+
+  changeDifficulty() {
+    if (this.score.value > 0 && this.score.value % 100 === 0) {
+      this.gameSpeed *= 0.5;
+      if (this.gameSpeed < 0) {
+        this.gameSpeed = 0;
+      }
+    }
+  }
       
   drawField(){
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -140,7 +149,7 @@ class PlayArea {
           break;
         }
       }
-      if (flag) {
+      if (flag) {       
         for (let ny = y; ny > 0; ny--) {
           for (let nx = 0; nx < this.width; nx++) {
             this.field[ny][nx] = this.field[ny - 1][nx];
@@ -153,10 +162,12 @@ class PlayArea {
         y++;
 
         linesDeleted++; // ラインが削除されたのでカウントを増やす
-      }
-    }
+
         this.score.line = linesDeleted
         this.score.displayScore();
+        this.changeDifficulty();
+      }
+    }
   }
   
   dropMinoLoop() {
