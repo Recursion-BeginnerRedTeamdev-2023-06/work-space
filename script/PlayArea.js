@@ -13,6 +13,7 @@ class PlayArea {
     this.canvas.height = TetroMino.BLOCK_SIZE*this.height;
     this.canvas.width = TetroMino.BLOCK_SIZE*this.width;
     this.canvas.style.border = "4px solid #555";
+    this.difficultyChanged = {};
     this.drawGrid();
   }
 
@@ -33,13 +34,25 @@ class PlayArea {
   }
 
   changeDifficulty() {
-    if (this.score.value > 0 && this.score.value % 100 === 0) {
-      this.gameSpeed *= 0.5;
-      if (this.gameSpeed < 0) {
-        this.gameSpeed = 0;
-      }
+    if (this.score.value >= 4000 && !this.difficultyChanged[4000]) {
+      this.gameSpeed *= 0.6;
+      this.difficultyChanged[4000] = true;
+    } 
+    else if (this.score.value >= 3000 && !this.difficultyChanged[3000]) {
+      this.gameSpeed *= 0.7;
+      this.difficultyChanged[3000] = true;
+    }
+    else if (this.score.value >= 2000 && !this.difficultyChanged[2000]) {
+      this.gameSpeed *= 0.8;
+      this.difficultyChanged[2000] = true;
+    }
+    else if (this.score.value >= 1000 && !this.difficultyChanged[1000]) {
+      this.gameSpeed *= 0.9;
+      this.difficultyChanged[1000] = true;
     }
   }
+  
+  
       
   drawField(){
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
