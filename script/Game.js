@@ -1,5 +1,4 @@
 import { PlayArea } from './PlayArea.js';
-// import { Score } from './Score.js';
 import { TetroMino } from './TetroMino.js';
 
 // PlayAreaクラスのフィールド描画
