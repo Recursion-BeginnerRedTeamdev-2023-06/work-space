@@ -88,8 +88,8 @@ class PlayArea {
     const canvas = document.getElementById('play-canvas');
     const context = canvas.getContext('2d');
     const gridSize = TetroMino.BLOCK_SIZE; // 1つのマス目のサイズ
-    const rows = 20; // マス目の行数
-    const columns = 10; // マス目の列数
+    const rows = this.canvas.height; // マス目の行数
+    const columns = this.canvas.width; // マス目の列数
   
     // マス目の描画
     for (let row = 0; row < rows; row++) {
