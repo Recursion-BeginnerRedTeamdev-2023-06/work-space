@@ -1,3 +1,4 @@
+import { DisplayNextMino } from "./DisplayNextMino.js";
 import { TetroMino } from "./TetroMino.js";
 import { Score } from "./Score.js"
 
@@ -13,6 +14,7 @@ class PlayArea {
     this.canvas.width = TetroMino.BLOCK_SIZE*this.width;
     this.canvas.style.border = "4px solid #555";
     this.difficultyChanged = {};
+    this.drawGrid();
   }
 
   start(){
@@ -22,8 +24,11 @@ class PlayArea {
     this.tetro_y = 0;
 
     this.FieldInit();
-    this.tetroMino = TetroMino.getRandomMinoType();
+    this.currentMino = TetroMino.getRandomMinoType();
+    this.nextMino = TetroMino.getRandomMinoType();
     this.dropMinoLoop();
+    DisplayNextMino.displayMino(this.nextMino);
+    
     this.score = new Score();
     this.score.displayScore(); // 初期値のスコアを表示
   }
@@ -52,6 +57,8 @@ class PlayArea {
   drawField(){
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    this.drawGrid();
+
     for(let y=0;y<this.height;y++){
       for(let x=0;x<this.width;x++){
         if(this.field[y][x]){
@@ -62,8 +69,8 @@ class PlayArea {
 
     for(let y=0;y<TetroMino.MINO_SIZE;y++){
       for(let x=0;x<TetroMino.MINO_SIZE;x++){
-        if(this.tetroMino["shape"][y][x]){
-          this.drawBlock(this.tetro_x+x, this.tetro_y+y, this.tetroMino["color"]);
+        if(this.currentMino["shape"][y][x]){
+          this.drawBlock(this.tetro_x+x, this.tetro_y+y, this.currentMino["color"]);
         }
       }
     }
@@ -90,6 +97,28 @@ class PlayArea {
     }
   }
 
+  drawGrid() {
+    const canvas = document.getElementById('play-canvas');
+    const context = canvas.getContext('2d');
+    const gridSize = TetroMino.BLOCK_SIZE; // 1つのマス目のサイズ
+    const rows = this.canvas.height; // マス目の行数
+    const columns = this.canvas.width; // マス目の列数
+  
+    // マス目の描画
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < columns; col++) {
+        const x = col * gridSize;
+        const y = row * gridSize;
+        
+        context.fillStyle = '#cccccc'; // マス目の色を指定
+        context.fillRect(x, y, gridSize, gridSize);
+        
+        context.strokeStyle = '#ffffff'; // マス目の枠線の色を指定
+        context.strokeRect(x, y, gridSize, gridSize);
+      }
+    }
+  }
+
   drawBlock(x, y, color) {
     let position_x = x * TetroMino.BLOCK_SIZE;
     let position_y = y * TetroMino.BLOCK_SIZE;
@@ -104,15 +133,15 @@ class PlayArea {
   fixMino(){
     for(let y=0;y< TetroMino.MINO_SIZE;y++){
       for(let x=0;x< TetroMino.MINO_SIZE;x++){
-        if(this.tetroMino["shape"][y][x]){
-          this.field[this.tetro_y + y][this.tetro_x + x] = this.tetroMino["color"];  
+        if(this.currentMino["shape"][y][x]){
+          this.field[this.tetro_y + y][this.tetro_x + x] = this.currentMino["color"];  
         }
       }
     }
   }
 
   isContact(next_x, next_y, ntetro) {
-    if(ntetro == undefined) ntetro = this.tetroMino;
+    if(ntetro == undefined) ntetro = this.currentMino;
     for (let y = 0; y < TetroMino.MINO_SIZE; y++) {
       for (let x = 0; x < TetroMino.MINO_SIZE; x++) {
         let new_position_x = this.tetro_x + next_x + x;
@@ -135,20 +164,26 @@ class PlayArea {
 
   dropMino() {
     if(this.isGameOver) return;
+
     if (this.isContact(0, 1)) this.tetro_y++;
     else {
       const INIT_TETRO_X = this.width/2 - TetroMino.MINO_SIZE/2;
       const INIT_TETRO_Y = 0;
-  
+      
       this.fixMino();
-      this.tetroMino = TetroMino.getRandomMinoType();
+      this.currentMino = this.next_mino;      
       this.tetro_x = INIT_TETRO_X;
       this.tetro_y = INIT_TETRO_Y;
   
       this.deleteMino(); // テトリスの行を消去する
+      this.currentMino = this.nextMino;
+      this.nextMino = TetroMino.getRandomMinoType();
       if (!this.isContact(0, 0)) this.isGameOver = true;
     }
+
     this.drawField();
+    DisplayNextMino.displayMino(this.nextMino);
+  
   }
 
   deleteMino() {
@@ -191,7 +226,7 @@ class PlayArea {
   }
 
   rotateMino(){
-    this.tetroMino = TetroMino.rotate(this.tetroMino);
+    this.currentMino = TetroMino.rotate(this.currentMino);
   }
 }
 

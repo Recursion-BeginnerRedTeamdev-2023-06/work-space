@@ -15,11 +15,14 @@
             <!-- 左:StartButton & 操作説明 -->
             <div class="col-3 h-100 m-5 p-5 d-flex flex-column justify-content-center align-items-center">
                 <button id="start-button" class="btn btn-info p-3"><h3>GAME START</h3></button>
+
                 <!-- 操作説明 -->
                 <div class="w-100 m-3 p-2 d-flex flex-column align-items-center">
                   <h2>操作説明</h2>
-                  <h4>← ↓ →: move</h4>
-                  <h4>Space  : rotate</h4>
+                  <br>
+                  <h5>←↓→:ブロック移動</h5>
+                  <br>
+                  <h5> Space:ブロック回転</h5>
                 </div>
             </div>
 
@@ -35,9 +38,9 @@
                 <h1 id="score-value" height="128" width="128"></h1>
           
                 <!-- next -->
-                <h1 class="m-3">next</h1>
+                <h2 class="m-3">NextBlock</h2>
                 <canvas id="next-mino-canvas" height="128" width="128"></canvas>
-              </div>
+            </div>
         </div>
         
         <script type="module" src="script/Game.js"></script>

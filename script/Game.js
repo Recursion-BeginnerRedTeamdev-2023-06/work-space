@@ -1,5 +1,4 @@
 import { PlayArea } from './PlayArea.js';
-// import { Score } from './Score.js';
 import { TetroMino } from './TetroMino.js';
 
 // PlayAreaクラスのフィールド描画
@@ -46,7 +45,7 @@ document.addEventListener('keydown', function(e) {
         }
         break;
       case 32: // スペースキー
-        let tetro = TetroMino.rotate(playArea.tetroMino);
+        let tetro = TetroMino.rotate(playArea.currentMino);
         if (playArea.isContact(0, 0, tetro)) {
           playArea.rotateMino();
         }
