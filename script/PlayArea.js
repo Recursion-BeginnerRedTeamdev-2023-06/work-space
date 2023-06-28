@@ -1,27 +1,45 @@
 import { DisplayNextMino } from "./DisplayNextMino.js";
 import { TetroMino } from "./TetroMino.js";
+import { Score } from "./Score.js"
 
 
 class PlayArea {
-  constructor(height, width, tetroMino){
+  constructor(height, width){
     this.height = height;
     this.width = width;
+
     this.currentMino = tetroMino;
     this.nextMino = TetroMino.getRandomMinoType();
     this.field = [];
-    this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;
-    this.tetro_y = 0;
     this.canvas = document.getElementById("play-canvas");
     this.context = this.canvas.getContext("2d");
     this.canvas.height = TetroMino.BLOCK_SIZE*this.height;
     this.canvas.width = TetroMino.BLOCK_SIZE*this.width;
     this.canvas.style.border = "4px solid #555";
-    
-    this.gameSpeed = 1000;
-    this.FieldInit();
-    this.dropMinoLoop();
+  }
 
+  start(){
+    this.gameSpeed = 1000;
+    this.isGameOver = false;
+    this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;
+    this.tetro_y = 0;
+
+    this.FieldInit();
+    this.tetroMino = TetroMino.getRandomMinoType();
+    this.dropMinoLoop();
     DisplayNextMino.displayMino(this.nextMino);
+    
+    this.score = new Score();
+    this.score.displayScore(); // 初期値のスコアを表示
+  }
+
+  changeDifficulty() {
+    if (this.score.value > 0 && this.score.value % 100 === 0) {
+      this.gameSpeed *= 0.5;
+      if (this.gameSpeed < 0) {
+        this.gameSpeed = 0;
+      }
+    }
   }
       
   drawField(){
@@ -41,6 +59,18 @@ class PlayArea {
           this.drawBlock(this.tetro_x+x, this.tetro_y+y, this.currentMino["color"]);
         }
       }
+    }
+
+    if(this.isGameOver){
+      let s = "GAME OVER";
+      this.context.font = "40px 'MSゴシック'";
+      let w = this.context.measureText(s).width;
+      let x = this.canvas.width/2 - w/2;
+      let y = this.canvas.height/2 - 20;
+      this.context.lineWidth = 4;
+      this.context.strokeText(s,x,y);
+      this.context.fillStyle = "white";
+      this.context.fillText(s,x,y);
     }
   }
 
@@ -96,7 +126,8 @@ class PlayArea {
     return true;
   }
 
-  dropMino() { 
+  dropMino() {
+    if(this.isGameOver) return;
 
     if (this.isContact(0, 1)) this.tetro_y++;
     else {
@@ -111,6 +142,7 @@ class PlayArea {
       this.deleteMino(); // テトリスの行を消去する
       this.currentMino = this.nextMino;
       this.nextMino = TetroMino.getRandomMinoType();
+      if (!this.isContact(0, 0)) this.isGameOver = true;
     }
 
     this.drawField();
@@ -129,7 +161,7 @@ class PlayArea {
           break;
         }
       }
-      if (flag) {
+      if (flag) {       
         for (let ny = y; ny > 0; ny--) {
           for (let nx = 0; nx < this.width; nx++) {
             this.field[ny][nx] = this.field[ny - 1][nx];
@@ -142,6 +174,10 @@ class PlayArea {
         y++;
 
         linesDeleted++; // ラインが削除されたのでカウントを増やす
+
+        this.score.line = linesDeleted
+        this.score.displayScore();
+        this.changeDifficulty();
       }
     }
   }
@@ -158,4 +194,4 @@ class PlayArea {
   }
 }
 
-export { PlayArea }
+export { PlayArea };
