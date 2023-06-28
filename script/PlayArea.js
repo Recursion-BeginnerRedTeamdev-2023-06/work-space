@@ -13,9 +13,19 @@ class PlayArea {
     this.canvas.height = TetroMino.BLOCK_SIZE*this.height;
     this.canvas.width = TetroMino.BLOCK_SIZE*this.width;
     this.canvas.style.border = "4px solid #555";
+    this.timerId = null; 
+    this.isPaused = false;
   }
 
   start(){
+    if(this.isPaused){
+      console.log("start1: timerId:" + this.timerId);
+      this.isPaused = false;
+      this.dropMinoLoop();
+      return;
+    }
+    console.log("start2: timerId:" + this.timerId);
+
     this.gameSpeed = 1000;
     this.isGameOver = false;
     this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;
@@ -29,6 +39,12 @@ class PlayArea {
     
     this.score = new Score();
     this.score.displayScore(); // 初期値のスコアを表示
+  }
+
+  stop(){
+    clearTimeout(this.timerId); 
+    console.log("stop timerId: " +this.timerId);
+    this.isPaused = true;
   }
 
   changeDifficulty() {
@@ -59,7 +75,7 @@ class PlayArea {
       }
     }
 
-    if(this.isGameOver){
+    if(this.isGameOver){ 
       let s = "GAME OVER";
       this.context.font = "40px 'MSゴシック'";
       let w = this.context.measureText(s).width;
@@ -69,6 +85,11 @@ class PlayArea {
       this.context.strokeText(s,x,y);
       this.context.fillStyle = "white";
       this.context.fillText(s,x,y);
+
+      clearTimeout(this.timerId); 
+      this.isPaused = false;
+      this.timerId =null;
+      console.log("game over: timerId:" + this.timerId);
     }
   }
 
@@ -181,8 +202,11 @@ class PlayArea {
   }
   
   dropMinoLoop() {
+    if(this.isPaused) return;
+
     this.dropMino();
-    setTimeout(() => {
+    this.timerId = setTimeout(() => {
+      console.log("dropminoloop:" +this.timerId)
       this.dropMinoLoop();
     }, this.gameSpeed);
   }

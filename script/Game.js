@@ -5,11 +5,18 @@ import { TetroMino } from './TetroMino.js';
 // PlayAreaクラスのフィールド描画
 let playArea = new PlayArea(20, 10);
 
-var button = document.getElementById("start-button");
-button.addEventListener("click", start);
+var startButton = document.getElementById("start-button");
+startButton.addEventListener("click", start);
 
 function start(){ 
   playArea.start();
+}
+
+var stopButton = document.getElementById("stop-button");
+stopButton.addEventListener("click", stop);
+
+function stop(){ 
+  playArea.stop();
 }
 
 document.addEventListener('keydown', function(e) {
