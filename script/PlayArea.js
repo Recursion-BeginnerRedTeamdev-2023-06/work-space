@@ -15,6 +15,7 @@ class PlayArea {
     this.canvas.style.border = "4px solid #555";
     this.timerId = null; 
     this.isPaused = false;
+    this.drawGrid();
   }
 
   start(){
@@ -59,6 +60,8 @@ class PlayArea {
   drawField(){
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    this.drawGrid();
+
     for(let y=0;y<this.height;y++){
       for(let x=0;x<this.width;x++){
         if(this.field[y][x]){
@@ -98,6 +101,28 @@ class PlayArea {
       this.field[y] = [];
       for(let x=0;x<this.width;x++){
           this.field[y][x] = 0;
+      }
+    }
+  }
+
+  drawGrid() {
+    const canvas = document.getElementById('play-canvas');
+    const context = canvas.getContext('2d');
+    const gridSize = TetroMino.BLOCK_SIZE; // 1つのマス目のサイズ
+    const rows = this.canvas.height; // マス目の行数
+    const columns = this.canvas.width; // マス目の列数
+  
+    // マス目の描画
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < columns; col++) {
+        const x = col * gridSize;
+        const y = row * gridSize;
+        
+        context.fillStyle = '#cccccc'; // マス目の色を指定
+        context.fillRect(x, y, gridSize, gridSize);
+        
+        context.strokeStyle = '#ffffff'; // マス目の枠線の色を指定
+        context.strokeRect(x, y, gridSize, gridSize);
       }
     }
   }
