@@ -8,8 +8,18 @@ let playArea = new PlayArea(20, 10);
 var button = document.getElementById("start-button");
 button.addEventListener("click", start);
 
-function start(){ 
+function start() { 
   playArea.start();
+  var music = new Audio();  // Audio オブジェクトを作成
+  music.src = "./music/Tetris.mp3";  // BGM ファイルのパスを設定
+  music.volume = 0.05;
+  music.loop = true;  // BGM をループ再生するように設定
+  music.addEventListener('ended', function() {
+    // BGM再生が終了したら再度再生する
+    music.currentTime = 0;
+    music.play();
+  });
+  music.play();  // BGM を再生
 }
 
 document.addEventListener('keydown', function(e) {
