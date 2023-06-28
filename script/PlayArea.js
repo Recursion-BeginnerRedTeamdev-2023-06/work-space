@@ -28,7 +28,7 @@ class PlayArea {
   }
 
   changeDifficulty() {
-    if (this.score.value > 0 && this.score.value % 1000 === 0) {
+    if (this.score.value > 0 && this.score.value % 100 === 0) {
       this.gameSpeed *= 0.5;
       if (this.gameSpeed < 0) {
         this.gameSpeed = 0;
@@ -149,7 +149,7 @@ class PlayArea {
           break;
         }
       }
-      if (flag) {
+      if (flag) {       
         for (let ny = y; ny > 0; ny--) {
           for (let nx = 0; nx < this.width; nx++) {
             this.field[ny][nx] = this.field[ny - 1][nx];
@@ -162,11 +162,12 @@ class PlayArea {
         y++;
 
         linesDeleted++; // ラインが削除されたのでカウントを増やす
-      }
-    }
+
         this.score.line = linesDeleted
         this.score.displayScore();
         this.changeDifficulty();
+      }
+    }
   }
   
   dropMinoLoop() {

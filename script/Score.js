@@ -23,11 +23,13 @@ class Score {
       } // 一度に複数のラインを消すと、ラインの数に応じてボーナスも加算される
         return this.value;
   }
+
   displayScore() {
     let scoreValueElement = document.getElementById("score-value");
-  
-    let scoreValue = "" + this.calculateScore();
+    let scoreValue = this.calculateScore();
+    
     scoreValueElement.textContent = scoreValue;
+    this.value = scoreValue;
   }
 }
 
