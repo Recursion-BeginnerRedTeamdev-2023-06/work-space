@@ -7,9 +7,6 @@ class PlayArea {
   constructor(height, width){
     this.height = height;
     this.width = width;
-
-    this.currentMino = tetroMino;
-    this.nextMino = TetroMino.getRandomMinoType();
     this.field = [];
     this.canvas = document.getElementById("play-canvas");
     this.context = this.canvas.getContext("2d");
@@ -25,7 +22,8 @@ class PlayArea {
     this.tetro_y = 0;
 
     this.FieldInit();
-    this.tetroMino = TetroMino.getRandomMinoType();
+    this.currentMino = TetroMino.getRandomMinoType();
+    this.nextMino = TetroMino.getRandomMinoType();
     this.dropMinoLoop();
     DisplayNextMino.displayMino(this.nextMino);
     
