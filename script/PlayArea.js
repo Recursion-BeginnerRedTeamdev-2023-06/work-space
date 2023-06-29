@@ -110,7 +110,7 @@ class PlayArea {
         const x = col * gridSize;
         const y = row * gridSize;
         
-        context.fillStyle = '#cccccc'; // マス目の色を指定
+        context.fillStyle = '#221816'; // マス目の色を指定
         context.fillRect(x, y, gridSize, gridSize);
         
         context.strokeStyle = '#ffffff'; // マス目の枠線の色を指定
