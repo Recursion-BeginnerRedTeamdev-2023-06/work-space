@@ -72,9 +72,7 @@ function checkGameOver() {
 }
 
 function gameReset() {
-  playArea.stop();
   MUSIC.pause();
-  playArea = new PlayArea(PLAY_AREA_HEIGHT, PLAY_AREA_WIDTH)
   reStartStopButton.innerHTML = "<h3>GAME STOP</h3>";
   isGameRunning = false;
   startButton.disabled = false;
