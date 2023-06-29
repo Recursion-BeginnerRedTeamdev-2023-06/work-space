@@ -22,13 +22,8 @@ function gameStart() {
   let isRetryGame = playArea && playArea.isGameOver;
 
   if(isRetryGame) {
-    // GameOverからスタートした場合
-    clearGameOverMessage();
-    // GameOverになった場合、インスタンスを削除して新たに作成する。
-    playArea = null;
-    music = null;
-    music = new Audio();
-    playArea = new PlayArea(PLAY_AREA_HEIGHT, PLAY_AREA_WIDTH);
+    retryGame();
+    return;
   }
 
   playArea.start();
@@ -38,6 +33,24 @@ function gameStart() {
   restartStopButton.disabled = false;
 
   checkGameOver();
+}
+
+function retryGame() {
+    // GameOverからスタートした場合
+    clearGameOverMessage();
+    // GameOverになった場合、インスタンスを削除して新たに作成する。
+    playArea = null;
+    music = null;
+    music = new Audio();
+    playArea = new PlayArea(PLAY_AREA_HEIGHT, PLAY_AREA_WIDTH);
+
+    playArea.start();
+    playBgm(music, music_name);
+    
+    startRetryButton.disabled = true;
+    restartStopButton.disabled = false;
+  
+    checkGameOver();
 }
 
 function toggleGameRestartAndStop() {
