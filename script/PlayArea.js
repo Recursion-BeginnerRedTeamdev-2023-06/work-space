@@ -21,19 +21,17 @@ class PlayArea {
 
   start(){
     if(this.isPaused){
-      console.log("start1: timerId:" + this.timerId);
       this.isPaused = false;
       this.dropMinoLoop();
       return;
     }
-    console.log("start2: timerId:" + this.timerId);
 
     this.gameSpeed = 1000;
     this.isGameOver = false;
     this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;
     this.tetro_y = 0;
 
-    this.FieldInit();
+    this.fieldInit();
     this.currentMino = TetroMino.getRandomMinoType();
     this.nextMino = TetroMino.getRandomMinoType();
     this.dropMinoLoop();
@@ -44,8 +42,7 @@ class PlayArea {
   }
 
   stop(){
-    clearTimeout(this.timerId); 
-    console.log("stop timerId: " +this.timerId);
+    clearTimeout(this.timerId);
     this.isPaused = true;
   }
 
@@ -67,8 +64,6 @@ class PlayArea {
       this.difficultyChanged[1000] = true;
     }
   }
-  
-  
       
   drawField(){
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -90,26 +85,9 @@ class PlayArea {
         }
       }
     }
-
-    if(this.isGameOver){ 
-      let s = "GAME OVER";
-      this.context.font = "40px 'MSゴシック'";
-      let w = this.context.measureText(s).width;
-      let x = this.canvas.width/2 - w/2;
-      let y = this.canvas.height/2 - 20;
-      this.context.lineWidth = 4;
-      this.context.strokeText(s,x,y);
-      this.context.fillStyle = "white";
-      this.context.fillText(s,x,y);
-
-      clearTimeout(this.timerId); 
-      this.isPaused = false;
-      this.timerId =null;
-      console.log("game over: timerId:" + this.timerId);
-    }
   }
 
-  FieldInit() {
+  fieldInit() {
     for(let y=0;y<this.height;y++){
       this.field[y] = [];
       for(let x=0;x<this.width;x++){
@@ -244,7 +222,6 @@ class PlayArea {
 
     this.dropMino();
     this.timerId = setTimeout(() => {
-      console.log("dropminoloop:" +this.timerId)
       this.dropMinoLoop();
     }, this.gameSpeed);
   }
