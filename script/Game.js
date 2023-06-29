@@ -1,32 +1,43 @@
 import { PlayArea } from './PlayArea.js';
 import { TetroMino } from './TetroMino.js';
 
-let startButton = document.getElementById("start-button");
-let reStartStopButton = document.getElementById("restart-stop-button");
+let startRetryButton = document.getElementById("start-retry-button");
+let restartStopButton = document.getElementById("restart-stop-button");
 let isGameRunning = false;
 
-startButton.addEventListener("click", gameStart);
-reStartStopButton.addEventListener("click", toggleGameRestartAndStop);
+startRetryButton.addEventListener("click", gameStart);
+restartStopButton.addEventListener("click", toggleGameRestartAndStop);
 
-startButton.disabled = false;
-reStartStopButton.disabled = true;
+startRetryButton.disabled = false;
+restartStopButton.disabled = true;
 
 const PLAY_AREA_HEIGHT = 20;
 const PLAY_AREA_WIDTH = 10;
 let playArea = new PlayArea(PLAY_AREA_HEIGHT, PLAY_AREA_WIDTH);
 
-const MUSIC = new Audio();
+let music = new Audio();
 let music_name = "Tetris.mp3";
 
 function gameStart() {
-  if (playArea) playArea.stop();
-  
-  playArea = new PlayArea(PLAY_AREA_HEIGHT, PLAY_AREA_WIDTH);
+  let isRetryGame = playArea && playArea.isGameOver;
+
+  if(isRetryGame) {
+    // GameOverからスタートした場合
+    clearGameOverMessage();
+    // GameOverになった場合、インスタンスを削除して新たに作成する。
+    playArea = null;
+    music = null;
+    music = new Audio();
+    playArea = new PlayArea(PLAY_AREA_HEIGHT, PLAY_AREA_WIDTH);
+  }
+
   playArea.start();
-  playBgm(MUSIC, music_name);
+  playBgm(music, music_name);
   
-  startButton.disabled = true;
-  reStartStopButton.disabled = false;
+  startRetryButton.disabled = true;
+  restartStopButton.disabled = false;
+
+  checkGameOver();
 }
 
 function toggleGameRestartAndStop() {
@@ -36,47 +47,16 @@ function toggleGameRestartAndStop() {
 
 function gameReStart() {
   playArea.start();
-  reStartStopButton.innerHTML = "<h3>GAME STOP</h3>";
+  restartStopButton.innerHTML = "<h3>GAME STOP</h3>";
   isGameRunning = false;
-  MUSIC.play();
+  music.play();
 }
 
 function gameStop(){ 
   if (playArea) playArea.stop();
-  reStartStopButton.innerHTML = "<h3>GAME RESTART</h3>";
+  restartStopButton.innerHTML = "<h3>GAME RESTART</h3>";
   isGameRunning = true;
-  MUSIC.pause();
-}
-
-function checkGameOver() {
-  if (playArea.isGameOver) {
-    let s = "GAME OVER";
-    playArea.context.font = "40px 'MSゴシック'";
-    let w = playArea.context.measureText(s).width;
-    let x = playArea.canvas.width/2 - w/2;
-    let y = playArea.canvas.height/2 - 20;
-    playArea.context.lineWidth = 4;
-    playArea.context.strokeText(s,x,y);
-    playArea.context.fillStyle = "white";
-    playArea.context.fillText(s,x,y);
-
-    // clearTimeout(playArea.timerId); 
-    playArea.isPaused = false;
-    playArea.timerId =null;
-
-    gameReset();
-  }
-  else {
-    requestAnimationFrame(checkGameOver);
-  }
-}
-
-function gameReset() {
-  MUSIC.pause();
-  reStartStopButton.innerHTML = "<h3>GAME STOP</h3>";
-  isGameRunning = false;
-  startButton.disabled = false;
-  reStartStopButton.disabled = true;
+  music.pause();
 }
 
 function playBgm(music, music_name) {
@@ -91,7 +71,43 @@ function playBgm(music, music_name) {
   music.play();  // BGM を再生
 }
 
-checkGameOver();
+function checkGameOver() {
+  if (playArea.isGameOver) {
+    drawGameOverMessage();
+    gameReset();
+  }
+  else {
+    requestAnimationFrame(checkGameOver);
+  }
+}
+
+function gameReset() {
+  playArea.stop();
+  music.pause();
+  startRetryButton.innerHTML = "<h3>GAME RETRY</h3>";
+  restartStopButton.innerHTML = "<h3>GAME STOP</h3>";
+  isGameRunning = false;
+  startRetryButton.disabled = false;
+  restartStopButton.disabled = true;
+}
+
+function drawGameOverMessage() {
+  let s = "GAME OVER";
+  let x = playArea.canvas.width / 2;
+  let y = playArea.canvas.height / 2;
+  
+  playArea.context.font = "40px 'MSゴシック'";
+  playArea.context.lineWidth = 4;
+  playArea.context.textAlign = "center"; // テキストを中央揃えに設定
+  playArea.context.textBaseline = "middle"; // テキストのベースラインを中央に設定
+  playArea.context.strokeText(s, x, y);
+  playArea.context.fillStyle = "white";
+  playArea.context.fillText(s, x, y);
+}
+
+function clearGameOverMessage() {
+  playArea.context.clearRect(0, 0, playArea.canvas.width, playArea.canvas.height);
+}
 
 document.addEventListener('keydown', function(e) {
   if (playArea.isGameOver) return;
