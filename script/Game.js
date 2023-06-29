@@ -60,14 +60,14 @@ function toggleGameRestartAndStop() {
 
 function gameReStart() {
   playArea.start();
-  restartStopButton.innerHTML = "<h3>GAME STOP</h3>";
+  restartStopButton.innerHTML = "<h3>GAME<br>STOP</h3>";
   isGameRunning = false;
   music.play();
 }
 
 function gameStop(){ 
   if (playArea) playArea.stop();
-  restartStopButton.innerHTML = "<h3>GAME RESTART</h3>";
+  restartStopButton.innerHTML = "<h3>GAME<br>RESTART</h3>";
   isGameRunning = true;
   music.pause();
 }
@@ -97,8 +97,8 @@ function checkGameOver() {
 function gameReset() {
   playArea.stop();
   music.pause();
-  startRetryButton.innerHTML = "<h3>GAME RETRY</h3>";
-  restartStopButton.innerHTML = "<h3>GAME STOP</h3>";
+  startRetryButton.innerHTML = "<h3>GAME<br>RETRY</h3>";
+  restartStopButton.innerHTML = "<h3>GAME<br>STOP</h3>";
   isGameRunning = false;
   startRetryButton.disabled = false;
   restartStopButton.disabled = true;
