@@ -30,9 +30,9 @@ document.addEventListener('keydown', function(e) {
         }
         break;
       case 38: // 上矢印キー
-        // if (playArea.isContact(0, -1)) {
-        //   playArea.tetro_y--;
-        // }
+         while (playArea.isContact(0, 1)) {
+           playArea.tetro_y++;
+         }
         break;
       case 39: // 右矢印キー
         if (playArea.isContact(1, 0)) {
