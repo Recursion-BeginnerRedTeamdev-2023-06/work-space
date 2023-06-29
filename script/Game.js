@@ -22,6 +22,7 @@ function gameStart() {
   let isRetryGame = playArea && playArea.isGameOver;
 
   if(isRetryGame) {
+    // GameOverからスタートした場合
     retryGame();
     return;
   }
@@ -36,7 +37,6 @@ function gameStart() {
 }
 
 function retryGame() {
-    // GameOverからスタートした場合
     clearGameOverMessage();
     // GameOverになった場合、インスタンスを削除して新たに作成する。
     playArea = null;
