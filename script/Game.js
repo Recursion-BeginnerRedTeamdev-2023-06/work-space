@@ -124,6 +124,9 @@ function clearGameOverMessage() {
 
 document.addEventListener('keydown', function(e) {
   if (playArea.isGameOver) return;
+  
+  if (playArea.isPaused) return;
+
   switch (e.keyCode) {
     case 37: // 左矢印キー
       if (playArea.isContact(-1, 0)) {
