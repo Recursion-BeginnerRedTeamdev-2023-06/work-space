@@ -13,17 +13,25 @@ class PlayArea {
     this.canvas.height = TetroMino.BLOCK_SIZE*this.height;
     this.canvas.width = TetroMino.BLOCK_SIZE*this.width;
     this.canvas.style.border = "4px solid #555";
+    this.timerId = null; 
+    this.isPaused = false;
     this.difficultyChanged = {};
     this.drawGrid();
   }
 
   start(){
+    if(this.isPaused){
+      this.isPaused = false;
+      this.dropMinoLoop();
+      return;
+    }
+
     this.gameSpeed = 1000;
     this.isGameOver = false;
     this.tetro_x = this.width/2 - TetroMino.MINO_SIZE/2;
     this.tetro_y = 0;
 
-    this.FieldInit();
+    this.fieldInit();
     this.currentMino = TetroMino.getRandomMinoType();
     this.nextMino = TetroMino.getRandomMinoType();
     this.dropMinoLoop();
@@ -31,6 +39,11 @@ class PlayArea {
     
     this.score = new Score();
     this.score.displayScore(); // 初期値のスコアを表示
+  }
+
+  stop(){
+    clearTimeout(this.timerId);
+    this.isPaused = true;
   }
 
   changeDifficulty() {
@@ -51,8 +64,6 @@ class PlayArea {
       this.difficultyChanged[1000] = true;
     }
   }
-  
-  
       
   drawField(){
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -74,21 +85,9 @@ class PlayArea {
         }
       }
     }
-
-    if(this.isGameOver){
-      let s = "GAME OVER";
-      this.context.font = "40px 'MSゴシック'";
-      let w = this.context.measureText(s).width;
-      let x = this.canvas.width/2 - w/2;
-      let y = this.canvas.height/2 - 20;
-      this.context.lineWidth = 4;
-      this.context.strokeText(s,x,y);
-      this.context.fillStyle = "white";
-      this.context.fillText(s,x,y);
-    }
   }
 
-  FieldInit() {
+  fieldInit() {
     for(let y=0;y<this.height;y++){
       this.field[y] = [];
       for(let x=0;x<this.width;x++){
@@ -219,8 +218,10 @@ class PlayArea {
   }
   
   dropMinoLoop() {
+    if(this.isPaused) return;
+
     this.dropMino();
-    setTimeout(() => {
+    this.timerId = setTimeout(() => {
       this.dropMinoLoop();
     }, this.gameSpeed);
   }
