@@ -1,4 +1,5 @@
 # Red Team 成果物：テトリス
+※https://recursion-beginnerredteamdev-2023-06.github.io/work-space/ をクリックすると利用可能です。
 
 ## <テトリスゲームの特徴>
 
